@@ -49,6 +49,11 @@ class ProfileController extends Controller
     {
         //
     }
+    public function print()
+    {
+        //
+        return view('profile.print');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -59,7 +64,9 @@ class ProfileController extends Controller
     public function edit()
     {
         //
-        return view('profile.edit');
+        $countries = \App\Models\Country::get();
+        $states = \App\Models\State::get();
+        return view('profile.edit', compact('countries', 'states'));
     }
 
     /**
@@ -74,16 +81,16 @@ class ProfileController extends Controller
         //
         $validated = $request->validate([
             "name" => "required|max:80",
-            "email" => "email",
-            "mobile" => "digits:10",
+            "dob" => "required",
+            "gender" => "required",
         ]);
-        $profile = Auth::user()->profile()->firstOrCreate();
+        $profile = Auth::user();
         $profile->name=$validated['name'];
-        $profile->mobile=$validated['mobile'];
-        $profile->email=$validated['email'];
+        $profile->dob=$validated['dob'];
+        $profile->gender=$validated['gender'];
         $profile->save();
         
-        return redirect(url('/editprofile'));
+        return redirect(url('/home'));
         
     }
 

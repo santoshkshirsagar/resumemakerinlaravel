@@ -45,4 +45,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(\App\Models\Profile::class);
     }
+    public function city()
+    {
+        return $this->belongsTo(App\Models\City::class);
+    }
 }

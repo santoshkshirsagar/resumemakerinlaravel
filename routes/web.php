@@ -24,7 +24,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/page/{page}', [App\Http\Controllers\PageController::class, 'show'])->name('page.show');
 
 
-Route::get('/editprofile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
 
 
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
 Route::post('/update', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+
+Route::get('/print', [App\Http\Controllers\ProfileController::class, 'print'])->name('profile.print');
+
+
+Route::post('/avatar', [App\Http\Controllers\UserController::class, 'avatar'])->name('avatar');

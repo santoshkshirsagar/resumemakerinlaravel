@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-
-class TaskController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,6 @@ class TaskController extends Controller
     public function index()
     {
         //
-        $tasks =  Task::get();
-        return response()->json($tasks, 200);
     }
 
     /**
@@ -39,18 +36,29 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
-        $data['title'] = $request->title;
-        $task = Task::create($data);
-        return response()->json($task, 200);
+    }
+
+    public function avatar(Request $request)
+    {
+        //
+        $validated=$request->validate([
+            "image" => "required|image|max:500000"
+        ]);
+        //$imagepath = $request->image->storePublicly('image');
+        //$imagepath = request('image')->storePublicly('avatars');
+        $imagepath = $request->file('image')->store('avatars', 'public');
+        Auth::user()->image=$imagepath;
+        Auth::user()->save();
+        return redirect(url('home'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show($id)
     {
         //
     }
@@ -58,10 +66,10 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
         //
     }
@@ -70,28 +78,22 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Task  $task
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $id)
     {
         //
-        $task->title = $request->title;
-        $task->save();
-        return response()->json($task, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Task  $task
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
         //
-        $task->delete();
-        $ouptut['message']="deleted";
-        return response()->json($ouptut, 200);
     }
 }
