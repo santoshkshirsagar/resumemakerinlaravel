@@ -48,6 +48,11 @@
                         <input type="text" class="form-control" name="address" id="address" placeholder="" value="{{ Auth::user()->address }}">
                     </div>
 
+                    
+                    @livewire('form.city')
+
+                    @livewire('form.education')
+
                     <input name="submit" type="submit" value="Submit" class="btn btn-primary">
                     
                 </div>

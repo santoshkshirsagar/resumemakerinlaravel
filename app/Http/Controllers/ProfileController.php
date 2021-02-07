@@ -64,9 +64,7 @@ class ProfileController extends Controller
     public function edit()
     {
         //
-        $countries = \App\Models\Country::get();
-        $states = \App\Models\State::get();
-        return view('profile.edit', compact('countries', 'states'));
+        return view('profile.edit');
     }
 
     /**

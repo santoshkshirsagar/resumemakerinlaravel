@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
             $table->text('tech_skills')->nullable();
             $table->text('activities')->nullable();
             $table->text('extra')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
+            
 
             $table->rememberToken();
             $table->timestamps();
