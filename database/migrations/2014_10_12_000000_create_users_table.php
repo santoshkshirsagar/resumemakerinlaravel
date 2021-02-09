@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->text('activities')->nullable();
             $table->text('extra')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
+            $table->enum('role', ['Admin', 'User'])->default('User');
             
 
             $table->rememberToken();

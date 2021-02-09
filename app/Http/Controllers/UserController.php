@@ -15,6 +15,47 @@ class UserController extends Controller
     public function index()
     {
         //
+        $this->checkAdmin();
+        $users = \App\Models\User::get();
+        return view('users.index', compact('users'));
+    }
+    private function checkAdmin(){
+        if(Auth::check()){
+            if(Auth::user()->role!='Admin'){
+                abort(401);
+            }
+        }else{
+            return redirect(route('login'));
+        }
+    }
+    public function export(){
+        $this->checkAdmin();
+        $users = \App\Models\User::get();
+        
+        header("Content-type: application/csv");
+        header("Content-Disposition: attachment; filename=\"data".".csv\"");
+        header("Pragma: no-cache");
+        header("Expires: 0");
+        $handle = fopen('php://output', 'w');
+
+        $row=array();
+        $row['id']="User Id";
+        $row['name']="Name";
+        $row['email']="Email";
+        $row['registrationDate']="Registration Date";
+        fputcsv($handle, $row);
+        foreach($users as  $user){
+            $row=array();
+            //$json = json_encode($user);
+            $row['id']=$user->id;
+            $row['name']=$user->name;
+            $row['email']=$user->email;
+            $row['registrationDate']=$user->created_at;
+            fputcsv($handle, $row);
+        }
+        fclose($handle);
+        exit;
+
     }
 
     /**

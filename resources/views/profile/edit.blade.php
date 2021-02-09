@@ -51,13 +51,19 @@
                     
                     @livewire('form.city')
 
-                    @livewire('form.education')
 
                     <input name="submit" type="submit" value="Submit" class="btn btn-primary">
                     
                 </div>
             </div>
             </form>
+            <h5>Education details</h5>
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    @livewire('form.education')
+                </div>
+            </div>
+
         </div>
     </main>
     

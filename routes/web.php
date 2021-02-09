@@ -33,3 +33,9 @@ Route::get('/print', [App\Http\Controllers\ProfileController::class, 'print'])->
 
 
 Route::post('/avatar', [App\Http\Controllers\UserController::class, 'avatar'])->name('avatar');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+    Route::get('/export', [App\Http\Controllers\UserController::class, 'export'])->name('users.export');
+    
+});
